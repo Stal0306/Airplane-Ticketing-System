@@ -10,7 +10,7 @@ I chose this project because as an international student, I've always faced prob
 
 
 
-- As a user, I want to be able to make an account with the system, where I enter my personal information.
+- As a user, I want to be able to and an account in the system, where I enter my personal information.
 - As a user, I want to be able to view the ideal flight to various destinations  around the world.
 - As a user, I want to be able to book the flight of my choice.
 - As a user, I want to be able to add additional baggages.
