@@ -17,11 +17,6 @@ public class AccountList {
         return listOfAccounts.size();
     }
 
-    // EFFECTS: returns the list of accounts in the system;
-    public List<UserAccount> getListOfAccounts() {
-        return listOfAccounts;
-    }
-
     // REQUIRES: ID number must be an 8-digit number;
     // EFFECTS: Adds a given account to the list of accounts;
     public void addAccount(UserAccount account) {
