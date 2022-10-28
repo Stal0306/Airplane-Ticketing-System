@@ -33,6 +33,6 @@ public class AccountListTest {
         l.addAccount(u);
         assertEquals(1,l.sizeAccountList());
         l.addAccount(u);
-        assertEquals(1,l.sizeAccountList());
+        assertEquals(2,l.sizeAccountList());
     }
 }

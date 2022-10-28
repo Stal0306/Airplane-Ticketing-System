@@ -23,7 +23,23 @@ public class AirplaneListTest {
         assertEquals(7,airtest.sizeAirplanelist());
     }
 
+    @Test
+    public void testCheckAirplaneList() {
+        Airplane air1 = new Airplane("stat200","Abu Dhabi","0000hrs",1500,5000,13250,500);
+        airtest.addAirplane(air1);
+        assertTrue(airtest.checkAirplanelist(air1));
+        assertEquals(8,airtest.sizeAirplanelist());
+        Airplane air2 = new Airplane("stat201","Dubai","2359hrs",1375,6300,17500,500);
+        assertFalse(airtest.checkAirplanelist(air2));
+    }
 
+    @Test
+    public void testSizeAirplaneList() {
+        assertEquals(7, airtest.sizeAirplanelist());
+        Airplane air1 = new Airplane("stat200","Abu Dhabi","0000hrs",1500,5000,13250,500);
+        airtest.addAirplane(air1);
+        assertEquals(8, airtest.sizeAirplanelist());
+    }
 
     @Test
     public void testAddAirplane() {
@@ -62,7 +78,7 @@ public class AirplaneListTest {
         assertEquals(8,airtest.sizeAirplanelist());
         airtest.addAirplane(air);
         assertTrue(airtest.checkAirplanelist(air));
-        assertEquals(8,airtest.sizeAirplanelist());
+        assertEquals(9,airtest.sizeAirplanelist());
     }
 
     @Test
