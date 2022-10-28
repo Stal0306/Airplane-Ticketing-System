@@ -113,8 +113,7 @@ public class TicketingSystem {
     // EFFECTS: allows user to customize their flight seat and baggage options
     public void confirmSpecAndPay(Airplane p) {
         Scanner s = new Scanner(System.in);
-        System.out.println("What class do you prefer to fly on; please type one of the following- "
-                    + "first, business, economy:");
+        System.out.println("What class do you prefer to fly on? (first/business/economy)");
         String seat = s.nextLine();
         classCost(seat, p);
         System.out.println("Your total is: " + user.getCost());
@@ -122,7 +121,7 @@ public class TicketingSystem {
         int bag = s.nextInt();
         user.baggageCost(bag, p);
         System.out.println("Your total is: " + user.getCost());
-        System.out.println("Would your like to confirm this flight? Answer yes or no.");
+        System.out.println("Would your like to confirm this flight? (yes/no)");
         String dummy = s.nextLine();
         String last = s.nextLine();
         finalOption(last, p);
