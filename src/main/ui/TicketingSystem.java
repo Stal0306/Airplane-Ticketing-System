@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // represents the User Interface of the ticketing system;
-// user an create an account, view flights and buy them with extra luggage
+// user can create an account, view flights and buy them with extra luggage
 // and choice of seat(economy, business, first)
 public class TicketingSystem {
     private UserAccount user;

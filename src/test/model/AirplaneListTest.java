@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,11 +84,15 @@ public class AirplaneListTest {
     @Test
     public void testCheckDestination() {
         ArrayList<Airplane> testdest = new ArrayList<>();
-        Airplane air1 = new Airplane("stat200","Abu Dhabi","0000hrs",1500,5000,13250,500);
-        Airplane air2 = new Airplane("stat201","Dubai","2359hrs",1375,6300,17500,500);
-        Airplane air3 = new Airplane("stat220","Sharjah","1200hrs",1200,4000,11250,400);
+        Airplane air1 = new Airplane("stat200", "Abu Dhabi", "0000hrs", 1500, 5000, 13250, 500);
+        Airplane air2 = new Airplane("stat201", "Dubai", "2359hrs", 1375, 6300, 17500, 500);
+        Airplane air3 = new Airplane("stat302", "Abu Dhabi", "1000hrs", 1500, 4000, 12500, 475);
         testdest.add(air1);
         testdest.add(air2);
         testdest.add(air3);
+        assertEquals(2, airtest.checkDestination("Abu Dhabi", testdest).size());
+        assertTrue(airtest.checkDestination("Abu Dhabi", testdest).contains(air1));
+        assertEquals(0, airtest.checkDestination("Toronto", testdest).size());
+        assertFalse(airtest.checkDestination("Toronto", testdest).contains(air3));
     }
 }
