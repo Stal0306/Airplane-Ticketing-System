@@ -18,5 +18,4 @@ public class AccountListTest {
     public void testConstructor() {
         assertEquals(0,l.sizeAccountList());
     }
-
 }

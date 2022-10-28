@@ -93,5 +93,4 @@ public class UserAccountTest {
         ua.setCost(0);
         assertEquals(0, ua.baggageCost(0,air));
     }
-
 }

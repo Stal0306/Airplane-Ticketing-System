@@ -27,5 +27,4 @@ public class AccountList {
     public void addAccount(UserAccount account) {
         listOfAccounts.add(account);
     }
-
 }

@@ -28,8 +28,6 @@ public class AirplaneList {
         return listOfAirplanes.size();
     }
 
-
-
     // MODIFIES: this
     // EFFECTS: adds given airplane to the list
     public void addAirplane(Airplane airplane) {

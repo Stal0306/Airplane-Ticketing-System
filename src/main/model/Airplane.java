@@ -58,7 +58,4 @@ public class Airplane {
     public int getBagCost() {
         return bagcost;
     }
-
-
-
 }

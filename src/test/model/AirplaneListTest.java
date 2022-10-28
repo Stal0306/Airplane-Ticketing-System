@@ -74,6 +74,5 @@ public class AirplaneListTest {
         testdest.add(air1);
         testdest.add(air2);
         testdest.add(air3);
-
     }
 }

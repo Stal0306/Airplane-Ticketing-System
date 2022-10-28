@@ -82,5 +82,4 @@ public class UserAccount {
         this.cost += (baggage * plane.getBagCost());
         return cost;
     }
-
 }
