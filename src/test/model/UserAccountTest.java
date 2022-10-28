@@ -22,7 +22,6 @@ public class UserAccountTest {
     }
 
     @Test
-
     public void testAddBalance() {
         ua.addBalance(500);
         assertEquals(1500, ua.getBalance());
@@ -37,7 +36,29 @@ public class UserAccountTest {
     }
 
     @Test
+    public void testAddCost() {
+        ua.addCost(500);
+        assertEquals(500, ua.getCost());
+    }
+
+    @Test
+    public void testAddCostMultipleTimes() {
+        ua.addCost(700);
+        assertEquals(700, ua.getCost());
+        ua.addCost(200);
+        assertEquals(900, ua.getCost());
+    }
+
+    @Test
     public void testMakePayment() {
+        ua.addCost(800);
+        assertTrue(ua.makePayment());
+        assertEquals(200, ua.getBalance());
+        assertEquals(0, ua.getCost());
+    }
+
+    @Test
+    public void testMakePaymentMultipleTimes() {
         ua.addCost(800);
         assertTrue(ua.makePayment());
         assertEquals(200, ua.getBalance());
@@ -46,6 +67,10 @@ public class UserAccountTest {
         assertFalse(ua.makePayment());
         assertEquals(200, ua.getBalance());
         assertEquals(500, ua.getCost());
+        ua.addBalance(400);
+        assertTrue(ua.makePayment());
+        assertEquals(100, ua.getBalance());
+        assertEquals(0, ua.getCost());
     }
 
     @Test
