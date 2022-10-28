@@ -25,7 +25,7 @@ public class AirplaneListTest {
 
     @Test
     public void testGetAirplaneList() {
-        assertEquals(airtest, airtest.getAirplanelist());
+        assertEquals(7, airtest.getAirplanelist().size());
     }
 
     @Test

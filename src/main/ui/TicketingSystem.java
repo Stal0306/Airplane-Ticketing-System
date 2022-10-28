@@ -72,7 +72,6 @@ public class TicketingSystem {
         } else {
             int temp = 0;
             for (Airplane p : specdest) {
-                System.out.println(specdest);
                 if (opt.equals(p.getFlightName())) {
                     temp = 1;
                     confirmSpecAndPay(p);
@@ -148,7 +147,7 @@ public class TicketingSystem {
 
     // MODIFIES: this
     // EFFECTS: makes payments if funds are sufficient; else asks user to add money
-    private void finalOption(String last, Airplane p) {
+    public void finalOption(String last, Airplane p) {
         Scanner s = new Scanner(System.in);
         if (last.equals("yes")) {
             if (user.checkPayment()) {
@@ -156,7 +155,7 @@ public class TicketingSystem {
                 System.out.println("Your booking for flight " + p.getFlightName() + " to " + p.getDestination()
                         + " has been confirmed!");
                 System.out.println("Your remaining balance is " + user.getBalance());
-                System.out.println("Thank you for choosing Air UBC");
+                revertOrEnd();
             } else {
                 System.out.println("Sorry, you don't have sufficient funds. :(");
                 System.out.println("Your balance is " + user.getBalance());
@@ -169,6 +168,20 @@ public class TicketingSystem {
             user.setCost(0);
             bookingOptions();
             buyTicket();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: asks if another booking is to be made, else ends the code.
+    public void revertOrEnd() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Would you like to make another booking? (yes/no)");
+        String revert = s.nextLine();
+        if (revert.equals("yes")) {
+            bookingOptions();
+            buyTicket();
+        } else {
+            System.out.println("Thank you for choosing Air UBC");
         }
     }
 }
