@@ -24,6 +24,11 @@ public class AirplaneListTest {
     }
 
     @Test
+    public void testGetAirplaneList() {
+        assertEquals(airtest, airtest.getAirplanelist());
+    }
+
+    @Test
     public void testCheckAirplaneList() {
         Airplane air1 = new Airplane("stat200","Abu Dhabi","0000hrs",1500,5000,13250,500);
         airtest.addAirplane(air1);
