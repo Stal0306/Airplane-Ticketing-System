@@ -1,13 +1,20 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 import ui.TicketingSystem;
 
+import java.util.ArrayList;
+
 // Represents a user's account with a name, an ID number and account balance
-public class UserAccount {
-    private int idnumber;
+public class UserAccount implements Writable {
+
     private String fullname;
+    private int idnumber;
     private int balance;
     private int cost;
+    private ArrayList<Airplane> booked;
 
     // EFFECTS: creates an account with user's full name, balance, cost of purchase, and an id number;
     //         ID number is an 8-digit number;
@@ -16,6 +23,7 @@ public class UserAccount {
         this.idnumber = id;
         this.balance = balance;
         this.cost = cost;
+        this.booked = new ArrayList<>();
     }
 
     // EFFECTS: returns full name of user;
@@ -37,6 +45,11 @@ public class UserAccount {
     // EFFECTS: returns the cost of the flight of the user;
     public int getCost() {
         return cost;
+    }
+
+    // EFFECTS: returns the list of booked flights for the user;
+    public ArrayList<Airplane> getBooked() {
+        return booked;
     }
 
     // EFFECTS: sets the cost of the flight;
@@ -81,5 +94,31 @@ public class UserAccount {
     public int baggageCost(int baggage, Airplane plane) {
         this.cost += (baggage * plane.getBagCost());
         return cost;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds booked airplane to booked
+    public void addBookedAirplane(Airplane p) {
+        booked.add(p);
+    }
+
+    // EFFECTS: returns this as a JSON Object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", fullname);
+        json.put("idnumber", idnumber);
+        json.put("balance", balance);
+        json.put("cost", cost);
+        json.put("booked", planestoJson());
+        return json;
+    }
+
+    // EFFECTS: returns booked planes of a user as a JSON Array
+    private JSONArray planestoJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Airplane p: this.booked) {
+            jsonArray.put(p.toJson());
+        }
+        return jsonArray;
     }
 }

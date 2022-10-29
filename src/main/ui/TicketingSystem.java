@@ -4,7 +4,11 @@ import model.AccountList;
 import model.Airplane;
 import model.AirplaneList;
 import model.UserAccount;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,21 +20,51 @@ public class TicketingSystem {
     private AccountList accountList;
     private AirplaneList airlineList;
     private ArrayList<Airplane> specdest;
+    private static final String SAVE_DEST = "./data/user.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: initializes the UI and creates new lists of airplanes and accounts to be used.
-    public TicketingSystem() {
+    public TicketingSystem() throws FileNotFoundException {
         specdest = new ArrayList<Airplane>();
         airlineList = new AirplaneList();
         accountList = new AccountList();
+        jsonWriter = new JsonWriter(SAVE_DEST);
+        jsonReader = new JsonReader(SAVE_DEST);
         runUI();
     }
 
     // EFFECTS - runs the UI
     public void runUI() {
+        Scanner s = new Scanner(System.in);
         airlineList.airlineOptions();
-        makeAccount();
-        bookingOptions();
-        buyTicket();
+        System.out.println("Would you like to load your previous account? (yes/no)");
+        String scan = s.nextLine();
+        if (scan.equals("yes")) {
+            loadAccountFromJson();
+            bookingOptions();
+            buyTicket();
+        } else if (scan.equals("no")) {
+            makeAccount();
+            bookingOptions();
+            buyTicket();
+        } else {
+            System.out.println("Sorry, your input is incorrect. Please type in yes or no.");
+            runUI();
+        }
+    }
+
+    // EFFECTS: loads saved user information from data file using json reader
+    public void loadAccountFromJson() {
+        try {
+            user = jsonReader.read();
+            System.out.println("Welcome back, " + user.getFullName() + "!");
+        } catch (IOException e) {
+            System.out.println("Unable to load account from " + SAVE_DEST);
+            makeAccount();
+            bookingOptions();
+            buyTicket();
+        }
     }
 
     // MODIFIES - this
@@ -84,6 +118,7 @@ public class TicketingSystem {
         }
     }
 
+    // EFFECTS: if flights to destination are available, displays flights; else go back to booking options
     public void checkListEmpty(String dest, ArrayList<Airplane> specdest) {
         if (specdest.size() != 0) {
             displayFlights(dest, specdest);
@@ -154,6 +189,7 @@ public class TicketingSystem {
                 System.out.println("Your booking for flight " + p.getFlightName() + " to " + p.getDestination()
                         + " has been confirmed!");
                 System.out.println("Your remaining balance is " + user.getBalance());
+                user.addBookedAirplane(p);
                 revertOrEnd();
             } else {
                 System.out.println("Sorry, you don't have sufficient funds. :(");
@@ -180,7 +216,26 @@ public class TicketingSystem {
             bookingOptions();
             buyTicket();
         } else {
-            System.out.println("Thank you for choosing Air UBC");
+            System.out.println("Would you like to save your account for future bookings? (yes/no)");
+            String save = s.nextLine();
+            if (save.equals("yes")) {
+                saveAccountToJson();
+                System.out.println("Thank you for choosing Air UBC");
+            } else if (save.equals("no")) {
+                System.out.println("Thank you for choosing Air UBC");
+            }
+        }
+    }
+
+    // EFFECTS: saves user information from data file using json writer
+    public void saveAccountToJson() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(user);
+            jsonWriter.close();
+            System.out.println("Your account has been saved to " + SAVE_DEST);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save account to " + SAVE_DEST);
         }
     }
 }

@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents an airplane with destination, time, and different costs.
-public class Airplane {
+public class Airplane implements Writable {
 
     private String flightname;
     private String destination;
@@ -57,5 +60,19 @@ public class Airplane {
     // EFFECTS - returns baggage cost of given plane;
     public int getBagCost() {
         return bagcost;
+    }
+
+    // EFFECTS: returns this as a JSONObject
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("flightname", flightname);
+        json.put("destination", destination);
+        json.put("time", time);
+        json.put("economy", economy);
+        json.put("business", business);
+        json.put("first", first);
+        json.put("bagcost", bagcost);
+        return json;
     }
 }

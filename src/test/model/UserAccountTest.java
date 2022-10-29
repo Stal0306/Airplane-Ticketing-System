@@ -2,6 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserAccountTest {
@@ -10,6 +13,7 @@ public class UserAccountTest {
 
     @BeforeEach
     public void setUp() {
+        ArrayList<Airplane> booked = new ArrayList<>();
         ua = new UserAccount("Stallon Pinto", 88077979, 1000,0);
     }
 
@@ -118,4 +122,38 @@ public class UserAccountTest {
         ua.setCost(0);
         assertEquals(0, ua.baggageCost(0,air));
     }
+
+    @Test
+    public void testAddBookedAirplane() {
+        Airplane air = new Airplane("stat200","Calgary","1100hrs",600,1400, 4000,200);
+        ua.addBookedAirplane(air);
+        assertEquals(1, ua.getBooked().size());
+        assertTrue(ua.getBooked().contains(air));
+    }
+
+    @Test
+    public void testAddMultipleBookedAirplanes() {
+        Airplane air1 = new Airplane("stat200","Calgary","1100hrs",600,1400, 4000,200);
+        Airplane air2 = new Airplane("stat201","Edmonton","1100hrs",600,1400, 4000,200);
+        ua.addBookedAirplane(air1);
+        assertEquals(1, ua.getBooked().size());
+        assertTrue(ua.getBooked().contains(air1));
+        assertFalse(ua.getBooked().contains(air2));
+        ua.addBookedAirplane(air2);
+        assertEquals(2,ua.getBooked().size());
+        assertTrue(ua.getBooked().contains(air1));
+        assertTrue(ua.getBooked().contains(air2));
+    }
+
+    public void testAddSameBookedAirplanesMultipleTimes() {
+        Airplane air1 = new Airplane("stat200","Calgary","1100hrs",600,1400, 4000,200);
+        ua.addBookedAirplane(air1);
+        assertEquals(1, ua.getBooked().size());
+        assertTrue(ua.getBooked().contains(air1));
+        ua.addBookedAirplane(air1);
+        assertEquals(2,ua.getBooked().size());
+        assertTrue(ua.getBooked().contains(air1));
+    }
+
+
 }

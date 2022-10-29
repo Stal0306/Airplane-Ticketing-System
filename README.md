@@ -15,3 +15,10 @@ I chose this project because as an international student, I've always faced prob
 - As a user, I want to be able to book the flight of my choice.
 - As a user, I want to be able to add additional baggage.
 - As a user, I want to be able to upgrade to business or first class at a flight.
+- As a user, I want to be able to save my bookings to the file when I'm quitting my application.
+- As a user, I want to be able to load my previous bookings when I start the aplication.
+
+### Citations
+
+This code has been edited in Phase 2 using the help of the Workroom example in EdX, which provides code for JsonReader and JsonWriter along with their tests.
+Link:https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo

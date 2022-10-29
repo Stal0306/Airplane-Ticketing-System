@@ -1,0 +1,26 @@
+{
+    "cost": 0,
+    "booked": [
+        {
+            "business": 5200,
+            "flightname": "scie113",
+            "bagcost": 700,
+            "destination": "Mangalore",
+            "time": "200hrs",
+            "economy": 1350,
+            "first": 12000
+        },
+        {
+            "business": 2150,
+            "flightname": "math110",
+            "bagcost": 200,
+            "destination": "Winnipeg",
+            "time": "2200hrs",
+            "economy": 350,
+            "first": 7000
+        }
+    ],
+    "balance": 2000,
+    "idnumber": 92929292,
+    "name": "Abu Fazl"
+}
