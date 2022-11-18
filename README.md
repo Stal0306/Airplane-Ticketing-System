@@ -18,7 +18,16 @@ I chose this project because as an international student, I've always faced prob
 - As a user, I want to be able to save my bookings to the file when I'm quitting my application.
 - As a user, I want to be able to load my previous bookings when I start the aplication.
 
+### Instructions for Grader
+
+- You can generate the first required event related to adding Xs to a Y by booking a flight(Book a Flight) and adding it to a list of booked flights for a user.
+- You can generate the second required event related to adding Xs to a Y by loading the user's infomation (View Account Details) or the user's previously booked and saved list of flights (Load Booked Flights)
+- You can locate my visual component by simply starting my ticketing system application :)
+- You can save the state of my application by clicking the "Save Account Information" button.
+- You can reload the state of my application by...
+
 ### Citations
 
 This code has been edited in Phase 2 using the help of the Workroom example in EdX, which provides code for JsonReader and JsonWriter along with their tests.
 Link:https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+

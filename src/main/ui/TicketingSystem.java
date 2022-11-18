@@ -54,19 +54,6 @@ public class TicketingSystem {
         }
     }
 
-    // EFFECTS: loads saved user information from data file using json reader
-    public void loadAccountFromJson() {
-        try {
-            user = jsonReader.read();
-            System.out.println("Welcome back, " + user.getFullName() + "!");
-        } catch (IOException e) {
-            System.out.println("Unable to load account from " + SAVE_DEST);
-            makeAccount();
-            bookingOptions();
-            buyTicket();
-        }
-    }
-
     // MODIFIES - this
     // EFFECTS - creates an account with a name, id number and balance, and adds user to lists
     public void makeAccount() {
@@ -90,7 +77,7 @@ public class TicketingSystem {
         System.out.println("Please type in your final destination:");
         System.out.println("We offer flights to:\nToronto\nEdmonton\nMontreal\nHalifax\nCalgary\nVictoria");
         String dest = s.nextLine();
-        this.specdest = airlineList.checkDestination(dest, airlineList.getAirplanelist());
+        specdest = airlineList.checkDestination(dest, airlineList.getAirplanelist());
         checkListEmpty(dest, specdest);
     }
 
@@ -152,7 +139,7 @@ public class TicketingSystem {
         String seat = s.nextLine();
         classCost(seat, p);
         System.out.println("Your total is: " + user.getCost());
-        System.out.println("Would you like to add extra baggage? If yes, enter number of bags, else enter 0.");
+        System.out.println("Please input the number of check-in bags you would like.");
         int bag = s.nextInt();
         user.baggageCost(bag, p);
         System.out.println("Your total is: " + user.getCost());
@@ -224,6 +211,19 @@ public class TicketingSystem {
             } else if (save.equals("no")) {
                 System.out.println("Thank you for choosing Air UBC");
             }
+        }
+    }
+
+    // EFFECTS: loads saved user information from data file using json reader
+    public void loadAccountFromJson() {
+        try {
+            user = jsonReader.read();
+            System.out.println("Welcome back, " + user.getFullName() + "!");
+        } catch (IOException e) {
+            System.out.println("Unable to load account from " + SAVE_DEST);
+            makeAccount();
+            bookingOptions();
+            buyTicket();
         }
     }
 

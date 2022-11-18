@@ -1,26 +1,7 @@
 {
     "cost": 0,
-    "booked": [
-        {
-            "business": 375,
-            "flightname": "atsc113",
-            "bagcost": 50,
-            "destination": "Victoria",
-            "time": "1100hrs",
-            "economy": 115,
-            "first": 1000
-        },
-        {
-            "business": 375,
-            "flightname": "atsc113",
-            "bagcost": 50,
-            "destination": "Victoria",
-            "time": "1100hrs",
-            "economy": 115,
-            "first": 1000
-        }
-    ],
-    "balance": 8000,
-    "idnumber": 88077979,
+    "booked": [],
+    "balance": 1100,
+    "idnumber": 10000,
     "name": "Stallon Pinto"
 }
