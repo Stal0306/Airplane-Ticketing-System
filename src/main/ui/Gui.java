@@ -378,6 +378,7 @@ public class Gui extends JFrame implements ActionListener {
         confirmFlightAndPay(p);
     }
 
+
     // EFFECTS: prints user's information
     public void accountInfoPrint() {
         consoleText.setText("");
