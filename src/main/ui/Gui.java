@@ -6,7 +6,6 @@ import model.AirplaneList;
 import model.UserAccount;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// Creates a GUI Instance with all required fields and methods using JFrame
 public class Gui extends JFrame implements ActionListener {
     private UserAccount user;
     private AccountList accountList;
@@ -38,11 +38,10 @@ public class Gui extends JFrame implements ActionListener {
     private JTextArea consoleText;
     private JFrame bookingFrame;
     private JPanel flightDisplay;
-    private JPanel pickFlight;
     private JTextArea displayText;
-    private JTextArea flightName;
 
 
+    // EFFECTS: initializes the GUI
     public Gui() {
         initializeObjects();
         airlineList.airlineOptions();
@@ -52,6 +51,7 @@ public class Gui extends JFrame implements ActionListener {
         makeMainFrame();
     }
 
+    // EFFECTS: initializes some fields
     public void initializeObjects() {
         specdest = new ArrayList<Airplane>();
         airlineList = new AirplaneList();
@@ -60,6 +60,7 @@ public class Gui extends JFrame implements ActionListener {
         jsonReader = new JsonReader(SAVE_DEST);
     }
 
+    // EFFECTS: creates frame and panels
     public void setFramesAndPanels() {
         frame = new JFrame();
         mainPanel = new JPanel();
@@ -89,6 +90,7 @@ public class Gui extends JFrame implements ActionListener {
 
     }
 
+    // EFFECTS: creates a label for the main frame
     public void setLabels() {
         label = new JLabel();
         plane = new ImageIcon("C:\\Users\\Stallon Pinto\\IdeaProjects\\project_s7f6k\\src\\main\\Images\\airplane.png");
@@ -105,6 +107,7 @@ public class Gui extends JFrame implements ActionListener {
         label.setBounds(0, 0, 100, 50);
     }
 
+    // EFFECTS: sets the buttons of the main frame
     public void setButtons() {
         button1 = new JButton("Create New Account");
         button1.setFont(new Font("Century", Font.PLAIN, 20));
@@ -131,6 +134,7 @@ public class Gui extends JFrame implements ActionListener {
         button6.addActionListener(this);
     }
 
+    // EFFECTS: puts together the main frame with all its components
     public void makeMainFrame() {
         mainPanel.add(label);
         buttonPanel.add(button1);
@@ -146,6 +150,7 @@ public class Gui extends JFrame implements ActionListener {
         frame.add(consolePanel);
     }
 
+    // EFFECTS: performs actions based on button clicked
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button1) {
@@ -168,6 +173,8 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new user and adds it to a list of users
     public void addAccount() {
         JTextField username = new JTextField();
         JTextField ubcid = new JTextField();
@@ -182,6 +189,7 @@ public class Gui extends JFrame implements ActionListener {
         accountList.addAccount(user);
     }
 
+    // EFFECTS: loads previously saved user account details using the Json framework
     public void loadAccount() {
         try {
             user = jsonReader.read();
@@ -191,6 +199,7 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: saves user account information using the Json framework
     public void saveAccount() {
         try {
             jsonWriter.open();
@@ -202,6 +211,7 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: checks which flights fly to required destination
     public void makeBooking() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("Toronto");
@@ -239,6 +249,7 @@ public class Gui extends JFrame implements ActionListener {
         displayText.setEditable(false);
     }
 
+    // EFFECTS: creates booking frame
     public void setBookingFrame(String dest, ArrayList<Airplane> specdest) {
         displayText.append("Here are our available flights to " + dest);
         displayText.append("\n ");
@@ -259,6 +270,7 @@ public class Gui extends JFrame implements ActionListener {
         chooseFlightPopUp();
     }
 
+    // EFFECTS: creates pop up to confirm flight name
     public void chooseFlightPopUp() {
         JTextField flight = new JTextField();
 
@@ -279,7 +291,7 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
-
+    // EFFECTS: confirms class and number of bags
     public void chooseClassAndBaggagePopUp(Airplane p) {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("Economy");
@@ -314,6 +326,7 @@ public class Gui extends JFrame implements ActionListener {
         user.addCost(b * plane.getBagCost());
     }
 
+    // EFFECTS: confirms tickets if "yes", else goes o main frame
     public void confirmFlightAndPay(Airplane p) {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("yes");
@@ -335,6 +348,7 @@ public class Gui extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: makes payment and deducts balance from account
     private void endPayment(Airplane p) {
         user.makePayment();
         bookingFrame.dispose();
@@ -349,6 +363,7 @@ public class Gui extends JFrame implements ActionListener {
 
     }
 
+    // EFFECTS: adds balance to your account if it is insufficient to make payment
     public void addMoney(Airplane p) {
         displayText.append("Sorry, you don't have sufficient funds. :(");
         displayText.append("\n");
@@ -363,8 +378,7 @@ public class Gui extends JFrame implements ActionListener {
         confirmFlightAndPay(p);
     }
 
-
-
+    // EFFECTS: prints user's information
     public void accountInfoPrint() {
         consoleText.setText("");
         consoleText.append("Account Name: " + user.getFullName());
@@ -372,6 +386,7 @@ public class Gui extends JFrame implements ActionListener {
         consoleText.append("\nAccount Name: " + user.getBalance());
     }
 
+    // EFFECTS: prints previously booked flight of users
     public void previousFlights() {
         consoleText.setText("");
         for (Airplane p : user.getBooked()) {

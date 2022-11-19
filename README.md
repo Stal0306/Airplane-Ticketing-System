@@ -24,7 +24,7 @@ I chose this project because as an international student, I've always faced prob
 - You can generate the second required event related to adding Xs to a Y by loading the user's infomation (View Account Details) or the user's previously booked and saved list of flights (Load Booked Flights)
 - You can locate my visual component by simply starting my ticketing system application :)
 - You can save the state of my application by clicking the "Save Account Information" button.
-- You can reload the state of my application by...
+- You can reload the state of my application by clicking the "Load Previous Account" provided it is saved
 
 ### Citations
 
