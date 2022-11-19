@@ -315,7 +315,7 @@ public class Gui extends JFrame implements ActionListener {
     // REQUIRES: seat must be first, business or economy
     // MODIFIES: this
     // EFFECTS: adds plane seat's cost to user's costs based on seat choice
-    public void makeCost(String seat,int b, Airplane plane) {
+    public void makeCost(String seat, int b, Airplane plane) {
         if (seat.equals("first")) {
             user.addCost(plane.getFirst());
         } else if (seat.equals("business")) {
