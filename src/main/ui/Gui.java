@@ -316,11 +316,11 @@ public class Gui extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: adds plane seat's cost to user's costs based on seat choice
     public void makeCost(String seat, int b, Airplane plane) {
-        if (seat.equals("first")) {
+        if (seat.equals("First")) {
             user.addCost(plane.getFirst());
-        } else if (seat.equals("business")) {
+        } else if (seat.equals("Business")) {
             user.addCost(plane.getBusiness());
-        } else {
+        } else if (seat.equals("Economy")) {
             user.addCost(plane.getEconomy());
         }
         user.addCost(b * plane.getBagCost());
@@ -393,6 +393,7 @@ public class Gui extends JFrame implements ActionListener {
             consoleText.append("Flight name: " + p.getFlightName());
             consoleText.append("\nDestination: " + p.getDestination());
             consoleText.append("\nTime: " + p.getTime());
+            consoleText.append("\n");
         }
     }
 }
