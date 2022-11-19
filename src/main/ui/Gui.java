@@ -8,7 +8,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +40,7 @@ public class Gui extends JFrame implements ActionListener {
     private JPanel flightDisplay;
     private JPanel pickFlight;
     private JTextArea displayText;
-    private JTextField flightName;
+    private JTextArea flightName;
 
 
     public Gui() {
@@ -214,46 +213,157 @@ public class Gui extends JFrame implements ActionListener {
         JComboBox dest = new JComboBox(model);
 
         JOptionPane.showConfirmDialog(null, dest, "Choose your final destination",
-                JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
-        String spec =  String.valueOf(dest.getSelectedItem());
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        String spec = String.valueOf(dest.getSelectedItem());
         specdest = airlineList.checkDestination(spec, airlineList.getAirplanelist());
-        createBookingFrame(spec, specdest);
-
+        createBookingFrame();
+        setBookingFrame(spec, specdest);
     }
 
     // EFFECTS: if flights to destination are available, displays flights; else go back to booking options
-    public void createBookingFrame(String dest, ArrayList<Airplane> specdest) {
+    public void createBookingFrame() {
         bookingFrame = new JFrame();
         flightDisplay = new JPanel();
-        pickFlight = new JPanel();
         displayText = new JTextArea();
-        flightName = new JTextField("<Input the flight name of your preference here>");
 
         bookingFrame.setTitle("Flight Booking");
         bookingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        bookingFrame.setSize(500, 500);
+        bookingFrame.setSize(500, 400);
         bookingFrame.setLayout(null);
         bookingFrame.setVisible(true);
 
-        flightDisplay.setBounds(0, 0, 500, 200);
+        flightDisplay.setBounds(0, 0, 500, 400);
         flightDisplay.setLayout(new BorderLayout());
-        displayText.setFont(new Font("Century", Font.PLAIN, 20));
-        displayText.setLayout(null);
+        displayText.setFont(new Font("Century", Font.PLAIN, 12));
+        displayText.setLayout(new GridLayout(1, 3));
         displayText.setEditable(false);
-
-        pickFlight.setBounds(0, 200, 500, 200);
-        pickFlight.setLayout(new BorderLayout());
-        flightName.setBounds(0,0,100,20);
-
-        setBookingFrame();
     }
 
-    public void setBookingFrame() {
+    public void setBookingFrame(String dest, ArrayList<Airplane> specdest) {
+        displayText.append("Here are our available flights to " + dest);
+        displayText.append("\n ");
+        for (Airplane p : specdest) {
+            displayText.append("\nFlight Name: " + p.getFlightName());
+            displayText.append("\nDestination: " + p.getDestination());
+            displayText.append("\nTime: " + p.getTime());
+            displayText.append("\nEconomy Cost: " + p.getEconomy());
+            displayText.append("\nBusiness Cost: " + p.getBusiness());
+            displayText.append("\nFirst Cost: " + p.getFirst());
+            displayText.append("\nBaggage Cost: " + p.getBagCost());
+            displayText.append("\n ");
+        }
+
         flightDisplay.add(displayText);
-        pickFlight.add(flightName);
         bookingFrame.add(flightDisplay);
-        bookingFrame.add(pickFlight);
+
+        chooseFlightPopUp();
     }
+
+    public void chooseFlightPopUp() {
+        JTextField flight = new JTextField();
+
+        Object[] message = {"Enter Flight Name of your Preference:", flight};
+        JOptionPane.showConfirmDialog(null, message, "Pick Flight", JOptionPane.OK_CANCEL_OPTION);
+        String chosen = flight.getText();
+        int temp = 0;
+        for (Airplane p : specdest) {
+            if (chosen.equals(p.getFlightName())) {
+                temp = 1;
+                chooseClassAndBaggagePopUp(p);
+            }
+        }
+        if (temp == 0) {
+            displayText.append("\n ");
+            displayText.append("\nPlease enter a valid Flight Name");
+            chooseFlightPopUp();
+        }
+    }
+
+
+    public void chooseClassAndBaggagePopUp(Airplane p) {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("Economy");
+        model.addElement("Business");
+        model.addElement("First");
+        JComboBox seat = new JComboBox(model);
+        JTextField bag = new JTextField();
+
+        Object[] message = {"Class :", seat, "Number of bags:", bag};
+        JOptionPane.showConfirmDialog(null, message, "Choose your class and baggage preference :",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        String spec = String.valueOf(seat.getSelectedItem());
+        int bags = Integer.parseInt(bag.getText());
+        makeCost(spec, bags, p);
+        displayText.setFont(new Font("Century", Font.PLAIN, 20));
+        displayText.setText("");
+        displayText.append("Your total cost is: " + user.getCost());
+        confirmFlightAndPay(p);
+    }
+
+    // REQUIRES: seat must be first, business or economy
+    // MODIFIES: this
+    // EFFECTS: adds plane seat's cost to user's costs based on seat choice
+    public void makeCost(String seat,int b, Airplane plane) {
+        if (seat.equals("first")) {
+            user.addCost(plane.getFirst());
+        } else if (seat.equals("business")) {
+            user.addCost(plane.getBusiness());
+        } else {
+            user.addCost(plane.getEconomy());
+        }
+        user.addCost(b * plane.getBagCost());
+    }
+
+    public void confirmFlightAndPay(Airplane p) {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("yes");
+        model.addElement("no");
+        JComboBox pay = new JComboBox(model);
+
+        JOptionPane.showConfirmDialog(null, pay, "Would you like to confirm your flight?",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        String dec = String.valueOf(pay.getSelectedItem());
+        if (dec.equals("yes")) {
+            if (user.checkPayment()) {
+                endPayment(p);
+            } else {
+                addMoney(p);
+            }
+        } else {
+            user.setCost(0);
+            bookingFrame.dispose();
+        }
+    }
+
+    private void endPayment(Airplane p) {
+        user.makePayment();
+        bookingFrame.dispose();
+        consoleText.setText("");
+        consoleText.append("Your booking for flight " + p.getFlightName() + " to " + p.getDestination()
+                + " has been confirmed!");
+        consoleText.append("\n");
+        System.out.println("\nYour remaining balance is " + user.getBalance());
+        user.addBookedAirplane(p);
+        consoleText.append("\n");
+        consoleText.append("\nThank you for Choosing Air UBC!");
+
+    }
+
+    public void addMoney(Airplane p) {
+        displayText.append("Sorry, you don't have sufficient funds. :(");
+        displayText.append("\n");
+        displayText.append("\nYour balance is " + user.getBalance());
+        displayText.append("\nYour cost is " + user.getCost());
+
+        JTextField balance = new JTextField("Add balance");
+
+        Object[] message = {" Your current balance is " + user.getBalance(), balance};
+        JOptionPane.showConfirmDialog(null, message, "Add balance", JOptionPane.OK_CANCEL_OPTION);
+        user.addBalance(Integer.parseInt(balance.getText()));
+        confirmFlightAndPay(p);
+    }
+
+
 
     public void accountInfoPrint() {
         consoleText.setText("");
@@ -264,11 +374,10 @@ public class Gui extends JFrame implements ActionListener {
 
     public void previousFlights() {
         consoleText.setText("");
-        for (Airplane p: user.getBooked()) {
+        for (Airplane p : user.getBooked()) {
             consoleText.append("Flight name: " + p.getFlightName());
-            consoleText.append("Destination: " + p.getDestination());
-            consoleText.append("Time: " + p.getTime());
-            consoleText.append("     ");
+            consoleText.append("\nDestination: " + p.getDestination());
+            consoleText.append("\nTime: " + p.getTime());
         }
     }
 }
