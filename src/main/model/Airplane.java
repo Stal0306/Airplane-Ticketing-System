@@ -39,7 +39,9 @@ public class Airplane implements Writable {
 
     // EFFECTS - returns time of given plane;
     public String getTime() {
+        EventLog.getInstance().logEvent(new Event(("A booked flight is printed!")));
         return time;
+
     }
 
     // EFFECTS - returns price of economy seat of given plane;

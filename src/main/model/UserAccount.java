@@ -34,6 +34,7 @@ public class UserAccount implements Writable {
     // REQUIRES: ID number must be an 8-digit number
     // EFFECTS: returns ID number of user;
     public int getIdNumber() {
+        EventLog.getInstance().logEvent(new Event(("Account Info printed!")));
         return idnumber;
     }
 
@@ -79,6 +80,7 @@ public class UserAccount implements Writable {
         if (balance >= cost) {
             balance -= cost;
             setCost(0);
+            EventLog.getInstance().logEvent(new Event(("New flight booked to account!")));
             return true;
         }
         return false;
@@ -100,6 +102,7 @@ public class UserAccount implements Writable {
     // EFFECTS: adds booked airplane to booked
     public void addBookedAirplane(Airplane p) {
         booked.add(p);
+
     }
 
     // EFFECTS: returns this as a JSON Object
@@ -110,6 +113,7 @@ public class UserAccount implements Writable {
         json.put("balance", balance);
         json.put("cost", cost);
         json.put("booked", planestoJson());
+        EventLog.getInstance().logEvent(new Event(("Account was saved.")));
         return json;
     }
 

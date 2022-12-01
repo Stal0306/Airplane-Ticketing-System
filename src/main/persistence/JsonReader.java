@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import model.Airplane;
+import model.Event;
+import model.EventLog;
 import model.UserAccount;
 import org.json.*;
 
@@ -53,9 +55,11 @@ public class JsonReader {
     // EFFECTS: parses airplanes from JSON object and adds them to user account
     private void addPlanes(UserAccount ua, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("booked");
+        EventLog.getInstance().logEvent(new Event(("Balances were loaded.")));
         for (Object json : jsonArray) {
             JSONObject nextPlane = (JSONObject) json;
             addPlane(ua, nextPlane);
+
         }
     }
 

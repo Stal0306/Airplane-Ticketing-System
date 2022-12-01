@@ -1,9 +1,7 @@
 package ui;
 
-import model.AccountList;
-import model.Airplane;
-import model.AirplaneList;
-import model.UserAccount;
+import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -14,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 // Creates a GUI Instance with all required fields and methods using JFrame
 public class Gui extends JFrame implements ActionListener {
@@ -46,7 +46,8 @@ public class Gui extends JFrame implements ActionListener {
     public Gui() {
         initializeObjects();
         airlineList.airlineOptions();
-        setFramesAndPanels();
+        setFrames();
+        setPanels();
         setLabels();
         setButtons();
         makeMainFrame();
@@ -62,18 +63,25 @@ public class Gui extends JFrame implements ActionListener {
     }
 
     // EFFECTS: creates frame and panels
-    public void setFramesAndPanels() {
+    public void setFrames() {
         frame = new JFrame();
         mainPanel = new JPanel();
         buttonPanel = new JPanel();
         consolePanel = new JPanel();
-
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                printLog();
+            }
+        });
         frame.setTitle("UBC Air Ticketing System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.setLayout(null);
         frame.setVisible(true);
+    }
 
+    public void setPanels() {
         mainPanel.setBackground(new Color(252, 198, 23));
         mainPanel.setBounds(0, 0, 800, 200);
         mainPanel.setLayout(new BorderLayout());
@@ -88,7 +96,6 @@ public class Gui extends JFrame implements ActionListener {
         consoleText.setFont(new Font("Century", Font.PLAIN, 20));
         consoleText.setLayout(null);
         consoleText.setEditable(false);
-
     }
 
     // EFFECTS: creates a label for the main frame
@@ -357,11 +364,9 @@ public class Gui extends JFrame implements ActionListener {
         consoleText.append("Your booking for flight " + p.getFlightName() + " to " + p.getDestination()
                 + " has been confirmed!");
         consoleText.append("\n");
-        System.out.println("\nYour remaining balance is " + user.getBalance());
         user.addBookedAirplane(p);
         consoleText.append("\n");
         consoleText.append("\nThank you for Choosing Air UBC!");
-
     }
 
     // EFFECTS: adds balance to your account if it is insufficient to make payment
@@ -391,10 +396,17 @@ public class Gui extends JFrame implements ActionListener {
     public void previousFlights() {
         consoleText.setText("");
         for (Airplane p : user.getBooked()) {
-            consoleText.append("Flight name: " + p.getFlightName());
+            consoleText.append("\nFlight name: " + p.getFlightName());
             consoleText.append("\nDestination: " + p.getDestination());
             consoleText.append("\nTime: " + p.getTime());
             consoleText.append("\n");
         }
+    }
+
+    public void printLog() {
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.toString() + "\n\n");
+        }
+        System.exit(0);
     }
 }

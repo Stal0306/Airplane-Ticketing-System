@@ -1,7 +1,15 @@
 {
     "cost": 0,
-    "booked": [],
-    "balance": 2000,
-    "idnumber": 85532828,
-    "name": "Raunika Arora"
+    "booked": [{
+        "business": 700,
+        "flightname": "fren101",
+        "bagcost": 100,
+        "destination": "Calgary",
+        "time": "2200hrs",
+        "economy": 180,
+        "first": 2500
+    }],
+    "balance": 9620,
+    "idnumber": 324092384,
+    "name": "Stallon "
 }

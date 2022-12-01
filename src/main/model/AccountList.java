@@ -21,5 +21,6 @@ public class AccountList {
     // EFFECTS: Adds a given account to the list of accounts;
     public void addAccount(UserAccount account) {
         listOfAccounts.add(account);
+        EventLog.getInstance().logEvent(new Event(("New Account created and added to List of Accounts")));
     }
 }
