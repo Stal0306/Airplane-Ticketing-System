@@ -26,6 +26,36 @@ I chose this project because as an international student, I've always faced prob
 - You can save the state of my application by clicking the "Save Account Information" button.
 - You can reload the state of my application by clicking the "Load Previous Account" provided it is saved
 
+### Phase 4 Task 2
+
+Wed Nov 30 21:15:48 PST 2022
+Balances were loaded.
+
+
+Wed Nov 30 21:16:04 PST 2022
+New Account created and added to List of Accounts
+
+
+Wed Nov 30 21:16:14 PST 2022
+A booked flight is printed!
+
+
+Wed Nov 30 21:16:36 PST 2022
+New flight booked to account!
+
+
+Wed Nov 30 21:16:39 PST 2022
+Account Info printed!
+
+
+Wed Nov 30 21:16:41 PST 2022
+A booked flight is printed!
+
+
+Wed Nov 30 21:16:45 PST 2022
+Account was saved.
+
+
 ### Citations
 
 This code has been edited in Phase 2 using the help of the Workroom example in EdX, which provides code for JsonReader and JsonWriter along with their tests.
