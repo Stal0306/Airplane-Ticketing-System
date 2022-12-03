@@ -10,7 +10,8 @@ public class Airplane implements Writable {
     private String destination;
     private String time;
     private int economy;
-    private int business;    private int first;
+    private int business;
+    private int first;
     private int bagcost;
 
     // EFFECTS - creates an airplane object containing its name, destination, time, and different costs.
