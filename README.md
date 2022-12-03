@@ -26,7 +26,7 @@ I chose this project because as an international student, I've always faced prob
 - You can save the state of my application by clicking the "Save Account Information" button.
 - You can reload the state of my application by clicking the "Load Previous Account" provided it is saved
 
-### Phase 4 Task 2
+### Phase 4: Task 2
 
 Wed Nov 30 21:15:48 PST 2022
 Balances were loaded.
@@ -55,6 +55,11 @@ A booked flight is printed!
 Wed Nov 30 21:16:45 PST 2022
 Account was saved.
 
+### Phase 4: Task 3
+
+- One thing I would definitely worked to avoid would be the ArrayList<Airplane> field in my GUI when I already had an AirplaneList class.
+- I also feel like I didn't need a AccountList class as I could've just used an ArrayList of UserAccounts instead.
+- I could've maybe divided the GUI into a few seperate classes to improve readability. 
 
 ### Citations
 

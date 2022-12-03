@@ -43,7 +43,7 @@ public class Gui extends JFrame implements ActionListener {
 
 
     // EFFECTS: initializes the GUI
-    public Gui() {
+    public  Gui() {
         initializeObjects();
         airlineList.airlineOptions();
         setFrames();
